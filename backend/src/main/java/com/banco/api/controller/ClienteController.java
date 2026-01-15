@@ -1,6 +1,7 @@
 package com.banco.api.controller;
 
 import com.banco.api.dto.ClienteDTO;
+import com.banco.api.entity.Cliente;
 import com.banco.api.mapper.ClienteMapper;
 import com.banco.api.service.ClienteService;
 import lombok.RequiredArgsConstructor;
@@ -32,13 +33,13 @@ public class ClienteController implements ClienteControllerApi {
 
     @Override
     public ResponseEntity<ClienteDTO> clientesPost(ClienteDTO cliente) {
-        com.banco.api.entity.Cliente created = clienteService.createCliente(mapper.toEntity(cliente));
+        Cliente created = clienteService.createCliente(mapper.toEntity(cliente));
         return new ResponseEntity<>(mapper.toDto(created), HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<ClienteDTO> clientesIdPut(Integer id, ClienteDTO cliente) {
-        com.banco.api.entity.Cliente updated = clienteService.updateCliente(id, mapper.toEntity(cliente));
+        Cliente updated = clienteService.updateCliente(id, mapper.toEntity(cliente));
         return ResponseEntity.ok(mapper.toDto(updated));
     }
 
