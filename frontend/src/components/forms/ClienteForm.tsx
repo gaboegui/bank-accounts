@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useId } from 'react';
 import { Button } from '../Button';
 import { Input } from '../Input';
 import type { Cliente } from '../../types';
@@ -18,6 +18,9 @@ interface ClienteFormProps {
  * @param onCancel - Función a ejecutar al cancelar.
  */
 export function ClienteForm({ initialData, onSubmit, onCancel }: ClienteFormProps) {
+    const generoId = useId();
+    const estadoId = useId();
+
     const [formData, setFormData] = useState<Partial<Cliente>>({
         nombre: '', genero: 'Masculino', edad: 0, identificacion: '', direccion: '', telefono: '', clienteId: '', contrasena: '', estado: true,
         ...initialData
@@ -36,8 +39,9 @@ export function ClienteForm({ initialData, onSubmit, onCancel }: ClienteFormProp
             <div className={styles.formRow}>
                 <Input label="Edad" type="number" required value={formData.edad} onChange={e => setFormData({ ...formData, edad: parseInt(e.target.value) })} />
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <label style={{ fontSize: '0.875rem', fontWeight: 500 }}>Género</label>
+                    <label htmlFor={generoId} style={{ fontSize: '0.875rem', fontWeight: 500 }}>Género</label>
                     <select
+                        id={generoId}
                         style={{ padding: '0.5rem', border: '1px solid var(--color-border)', borderRadius: '4px', height: '100%', minHeight: '38px' }}
                         value={formData.genero}
                         onChange={e => setFormData({ ...formData, genero: e.target.value })}
@@ -58,8 +62,9 @@ export function ClienteForm({ initialData, onSubmit, onCancel }: ClienteFormProp
                     <Input label="Contraseña" type="password" required value={formData.contrasena} onChange={e => setFormData({ ...formData, contrasena: e.target.value })} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <label style={{ fontSize: '0.875rem', fontWeight: 500 }}>Estado</label>
+                    <label htmlFor={estadoId} style={{ fontSize: '0.875rem', fontWeight: 500 }}>Estado</label>
                     <select
+                        id={estadoId}
                         style={{ padding: '0.5rem', border: '1px solid var(--color-border)', borderRadius: '4px', height: '100%', minHeight: '38px' }}
                         value={formData.estado ? 'true' : 'false'}
                         onChange={e => setFormData({ ...formData, estado: e.target.value === 'true' })}
