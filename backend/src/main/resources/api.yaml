@@ -1,0 +1,329 @@
+openapi: 3.0.0
+info:
+  title: Banking API
+  description: API for managing clients, accounts, and movements.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+    description: Local server
+
+paths:
+  /clientes:
+    get:
+      tags:
+        - ClienteController
+      summary: List all clients
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClienteDTO'
+    post:
+      tags:
+        - ClienteController
+      summary: Create a new client
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClienteDTO'
+        required: true
+      responses:
+        '201':
+          description: Client created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClienteDTO'
+
+  /clientes/{id}:
+    put:
+      tags:
+        - ClienteController
+      summary: Update a client
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClienteDTO'
+      responses:
+        '200':
+          description: Client updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClienteDTO'
+    delete:
+      tags:
+        - ClienteController
+      summary: Delete a client
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Client deleted
+
+  /cuentas:
+    get:
+      tags:
+        - CuentaController
+      summary: List all accounts
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CuentaDTO'
+    post:
+      tags:
+        - CuentaController
+      summary: Create a new account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CuentaDTO'
+      responses:
+        '201':
+          description: Account created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CuentaDTO'
+
+  /cuentas/{id}:
+    put:
+      tags:
+        - CuentaController
+      summary: Update an account
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CuentaDTO'
+      responses:
+        '200':
+          description: Account updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CuentaDTO'
+    delete:
+      tags:
+        - CuentaController
+      summary: Delete an account
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Account deleted
+
+  /movimientos:
+    get:
+      tags:
+        - MovimientosController
+      summary: List movements
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovimientoDTO'
+    post:
+      tags:
+        - MovimientosController
+      summary: Create a new movement (Deposit/Withdrawal)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovimientoDTO'
+      responses:
+        '201':
+          description: Movement created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovimientoDTO'
+  
+  /movimientos/{id}:
+    put:
+      tags:
+        - MovimientosController
+      summary: Update a movement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovimientoDTO'
+      responses:
+        '200':
+          description: Movement updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovimientoDTO'
+    delete:
+      tags:
+        - MovimientosController
+      summary: Delete a movement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Movement deleted
+
+  /reportes:
+    get:
+      tags:
+        - ReportesController
+      summary: Generate reports
+      parameters:
+        - name: fechaInicio
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: fechaFin
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: clienteId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Report data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReporteDTO'
+
+components:
+  schemas:
+    ClienteDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        nombre:
+          type: string
+        genero:
+          type: string
+        edad:
+          type: integer
+        identificacion:
+          type: string
+        direccion:
+          type: string
+        telefono:
+          type: string
+        clienteId:
+          type: string
+        contrasena:
+          type: string
+        estado:
+          type: boolean
+    
+    CuentaDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        numeroCuenta:
+          type: string
+        tipoCuenta:
+          type: string
+        saldoInicial:
+          type: number
+        estado:
+          type: boolean
+        clienteId:
+          type: integer
+          description: ID of the client (FK)
+
+    MovimientoDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        fecha:
+          type: string
+          format: date-time
+        tipoMovimiento:
+          type: string
+        valor:
+          type: number
+        saldo:
+          type: number
+          readOnly: true
+        cuentaId:
+          type: integer
+          description: ID of the account (FK)
+
+    ReporteDTO:
+      type: object
+      properties:
+        fecha:
+          type: string
+        cliente:
+          type: string
+        numeroCuenta:
+          type: string
+        tipo:
+          type: string
+        saldoInicial:
+          type: number
+        estado:
+          type: boolean
+        transaccion:
+          type: number
+        saldoDisponible:
+          type: number

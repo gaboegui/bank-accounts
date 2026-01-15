@@ -1,0 +1,38 @@
+import { api } from './api';
+import type { Movimiento } from '../types';
+
+/**
+ * Obtiene todos los movimientos de la API.
+ * @returns Una promesa que resuelve a un array de objetos Movimiento.
+ */
+export const getMovimientos = async () => {
+    return api.get<Movimiento[]>('/movimientos');
+};
+
+/**
+ * Crea un nuevo movimiento.
+ * @param movimiento - Los datos del movimiento a crear.
+ * @returns Una promesa que resuelve al objeto Movimiento creado.
+ */
+export const createMovimiento = async (movimiento: Movimiento) => {
+    return api.post<Movimiento>('/movimientos', movimiento);
+};
+
+/**
+ * Actualiza un movimiento existente.
+ * @param id - El ID del movimiento a actualizar.
+ * @param movimiento - Los datos actualizados del movimiento.
+ * @returns Una promesa que resuelve al objeto Movimiento actualizado.
+ */
+export const updateMovimiento = async (id: number, movimiento: Movimiento) => {
+    return api.put<Movimiento>(`/movimientos/${id}`, movimiento);
+};
+
+/**
+ * Elimina un movimiento por ID.
+ * @param id - El ID del movimiento a eliminar.
+ * @returns Una promesa que resuelve cuando la eliminación se completa.
+ */
+export const deleteMovimiento = async (id: number) => {
+    return api.delete(`/movimientos/${id}`);
+};
