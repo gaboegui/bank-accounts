@@ -63,7 +63,7 @@ export function MainLayout() {
                     >
                         <Menu size={24} />
                     </button>
-                    <h1 className={styles.headerTitle}>BANCO</h1>
+                    <h1 className={styles.headerTitle}>NOMBRE DEL BANCO</h1>
                 </header>
 
                 <main className={styles.content}>

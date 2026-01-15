@@ -16,6 +16,7 @@ Este proyecto consiste en una aplicación bancaria con una arquitectura de micro
 - Spring Boot 3.4.0
 - PostgreSQL
 - JUnit 5 / Mockito
+- OpenAPI / Swagger
 
 ### Frontend
 - React
