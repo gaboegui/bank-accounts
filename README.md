@@ -22,7 +22,6 @@ Este proyecto consiste en una aplicación bancaria con una arquitectura de micro
 - React
 - Vite
 - React Testing Library
-- Vitest
 
 ## Instrucciones de Despliegue
 
