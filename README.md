@@ -32,31 +32,25 @@ Este proyecto consiste en una aplicación bancaria con una arquitectura de micro
 
 ### Pasos para ejecutar con Docker
 
-1. **Construir el artefacto del Backend**:
-   Es necesario generar el archivo JAR antes de construir la imagen de Docker:
-   ```bash
-   cd backend
-   mvn clean package -DskipTests
-   cd ..
-   ```
 
-2. **Ejecutar la Aplicación Completa**:
+
+1. **Ejecutar la Aplicación Completa**:
    Levanta la base de datos, el backend y el frontend:
    ```bash
    docker-compose up --build -d
    ```
-   - **Frontend**: `http://localhost:5173`
+   - **Frontend**: `http://localhost` o `http://localhost:5173`
    - **API Backend**: `http://localhost:8080`
    - **Swagger UI**: `http://localhost:8080/swagger-ui.html` 
 
-3. **Ejecutar SOLO el Backend y Base de Datos**:
+2. **Ejecutar SOLO el Backend y Base de Datos**:
    Útil si prefieres correr el frontend de forma local para desarrollo:
    ```bash
    docker-compose up --build -d backend-app
    ```
    *Docker iniciará automáticamente el servicio de base de datos debido a las dependencias.*
 
-4. **Detener los servicios**:
+3. **Detener los servicios**:
    ```bash
    docker-compose down
    ```
