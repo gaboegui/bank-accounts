@@ -52,7 +52,8 @@ public class CuentaController implements CuentaControllerApi {
 
     @Override
     public ResponseEntity<CuentaResponse> cuentasIdPut(Integer id, CuentaDTO cuenta) {
-        com.banco.api.entity.Cuenta updated = cuentaService.updateCuenta(id, mapper.toEntity(cuenta));
+        cuenta.setId(id);
+        com.banco.api.entity.Cuenta updated = cuentaService.updateCuenta(cuenta);
 
         CuentaResponse response = new CuentaResponse();
         response.setData(mapper.toDto(updated));
@@ -62,7 +63,8 @@ public class CuentaController implements CuentaControllerApi {
 
     @Override
     public ResponseEntity<VoidResponse> cuentasIdDelete(Integer id) {
-        cuentaService.deleteCuenta(id);
+        com.banco.api.dto.DeleteDTO deleteDTO = new com.banco.api.dto.DeleteDTO(id);
+        cuentaService.deleteCuenta(deleteDTO);
 
         VoidResponse response = new VoidResponse();
 

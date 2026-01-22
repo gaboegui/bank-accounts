@@ -20,18 +20,17 @@ public interface ClienteService {
     /**
      * Actualiza la información de un cliente existente.
      * 
-     * @param id      - El ID del cliente a actualizar.
-     * @param cliente - Los datos del cliente con actualizaciones.
+     * @param clienteDTO - Los datos del cliente con actualizaciones.
      * @return La entidad cliente actualizada.
      */
-    Cliente updateCliente(Integer id, Cliente cliente);
+    Cliente updateCliente(com.banco.api.dto.ClienteDTO clienteDTO);
 
     /**
      * Elimina un cliente por su ID.
      * 
-     * @param id - El ID del cliente a eliminar.
+     * @param deleteDTO - El DTO con el ID del cliente a eliminar.
      */
-    void deleteCliente(Integer id);
+    void deleteCliente(com.banco.api.dto.DeleteDTO deleteDTO);
 
     /**
      * Recupera todos los clientes en el sistema.

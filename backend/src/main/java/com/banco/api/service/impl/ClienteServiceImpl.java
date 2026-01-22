@@ -1,6 +1,8 @@
 package com.banco.api.service.impl;
 
 import com.banco.api.entity.Cliente;
+import com.banco.api.dto.ClienteDTO;
+import com.banco.api.dto.DeleteDTO;
 import com.banco.api.exception.BusinessException;
 import com.banco.api.repository.ClienteRepository;
 import com.banco.api.service.ClienteService;
@@ -38,25 +40,27 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Cliente updateCliente(Integer id, Cliente cliente) {
+    public Cliente updateCliente(ClienteDTO clienteDTO) {
+        Integer id = clienteDTO.getId();
         Cliente existing = clienteRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Cliente no encontrado"));
-        existing.setNombre(cliente.getNombre());
-        existing.setGenero(cliente.getGenero());
-        existing.setEdad(cliente.getEdad());
-        existing.setIdentificacion(cliente.getIdentificacion());
-        existing.setDireccion(cliente.getDireccion());
-        existing.setTelefono(cliente.getTelefono());
+        existing.setNombre(clienteDTO.getNombre());
+        existing.setGenero(clienteDTO.getGenero());
+        existing.setEdad(clienteDTO.getEdad());
+        existing.setIdentificacion(clienteDTO.getIdentificacion());
+        existing.setDireccion(clienteDTO.getDireccion());
+        existing.setTelefono(clienteDTO.getTelefono());
         // Hash password antes de actualizar si fue cambiado
-        if (cliente.getContrasena() != null && !cliente.getContrasena().isEmpty()) {
-            existing.setContrasena(passwordEncoder.encode(cliente.getContrasena()));
+        if (clienteDTO.getContrasena() != null && !clienteDTO.getContrasena().isEmpty()) {
+            existing.setContrasena(passwordEncoder.encode(clienteDTO.getContrasena()));
         }
-        existing.setEstado(cliente.getEstado());
+        existing.setEstado(clienteDTO.getEstado());
         return clienteRepository.save(existing);
     }
 
     @Override
-    public void deleteCliente(Integer id) {
+    public void deleteCliente(DeleteDTO deleteDTO) {
+        Integer id = deleteDTO.getId();
         if (!clienteRepository.existsById(id)) {
             throw new BusinessException("Cliente no encontrado");
         }

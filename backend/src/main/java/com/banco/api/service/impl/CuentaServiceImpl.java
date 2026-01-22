@@ -1,6 +1,8 @@
 package com.banco.api.service.impl;
 
 import com.banco.api.entity.Cuenta;
+import com.banco.api.dto.CuentaDTO;
+import com.banco.api.dto.DeleteDTO;
 import com.banco.api.exception.BusinessException;
 import com.banco.api.repository.ClienteRepository;
 import com.banco.api.repository.CuentaRepository;
@@ -37,17 +39,19 @@ public class CuentaServiceImpl implements CuentaService {
     }
 
     @Override
-    public Cuenta updateCuenta(Integer id, Cuenta cuenta) {
+    public Cuenta updateCuenta(CuentaDTO cuentaDTO) {
+        Integer id = cuentaDTO.getId();
         Cuenta existing = cuentaRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Cuenta no encontrada"));
-        existing.setTipoCuenta(cuenta.getTipoCuenta());
-        existing.setSaldoInicial(cuenta.getSaldoInicial());
-        existing.setEstado(cuenta.getEstado());
+        existing.setTipoCuenta(cuentaDTO.getTipoCuenta());
+        existing.setSaldoInicial(cuentaDTO.getSaldoInicial());
+        existing.setEstado(cuentaDTO.getEstado());
         return cuentaRepository.save(existing);
     }
 
     @Override
-    public void deleteCuenta(Integer id) {
+    public void deleteCuenta(DeleteDTO deleteDTO) {
+        Integer id = deleteDTO.getId();
         if (!cuentaRepository.existsById(id)) {
             throw new BusinessException("Cuenta no encontrada");
         }

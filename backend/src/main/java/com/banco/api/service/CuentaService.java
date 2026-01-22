@@ -20,18 +20,17 @@ public interface CuentaService {
     /**
      * Actualiza los detalles de una cuenta existente (ej. estado, límites).
      * 
-     * @param id     - El ID de la cuenta a actualizar.
-     * @param cuenta - Los datos de la cuenta con actualizaciones.
+     * @param cuentaDTO - Los datos de la cuenta con actualizaciones.
      * @return La entidad cuenta actualizada.
      */
-    Cuenta updateCuenta(Integer id, Cuenta cuenta);
+    Cuenta updateCuenta(com.banco.api.dto.CuentaDTO cuentaDTO);
 
     /**
      * Elimina una cuenta del sistema.
      * 
-     * @param id - El ID de la cuenta a eliminar.
+     * @param deleteDTO - El DTO con el ID de la cuenta a eliminar.
      */
-    void deleteCuenta(Integer id);
+    void deleteCuenta(com.banco.api.dto.DeleteDTO deleteDTO);
 
     /**
      * Recupera todas las cuentas registradas en el sistema.

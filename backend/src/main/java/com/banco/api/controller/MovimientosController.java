@@ -54,7 +54,8 @@ public class MovimientosController implements MovimientosControllerApi {
 
     @Override
     public ResponseEntity<MovimientoResponse> movimientosIdPut(Integer id, MovimientoDTO movimiento) {
-        Movimiento updated = movimientoService.updateMovimiento(id, mapper.toEntity(movimiento));
+        movimiento.setId(id);
+        Movimiento updated = movimientoService.updateMovimiento(movimiento);
 
         MovimientoResponse response = new MovimientoResponse();
         response.setData(mapper.toDto(updated));
@@ -64,7 +65,8 @@ public class MovimientosController implements MovimientosControllerApi {
 
     @Override
     public ResponseEntity<VoidResponse> movimientosIdDelete(Integer id) {
-        movimientoService.deleteMovimiento(id);
+        com.banco.api.dto.DeleteDTO deleteDTO = new com.banco.api.dto.DeleteDTO(id);
+        movimientoService.deleteMovimiento(deleteDTO);
 
         VoidResponse response = new VoidResponse();
 

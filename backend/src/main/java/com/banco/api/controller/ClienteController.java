@@ -53,7 +53,8 @@ public class ClienteController implements ClienteControllerApi {
 
     @Override
     public ResponseEntity<ClienteResponse> clientesIdPut(Integer id, ClienteDTO cliente) {
-        Cliente updated = clienteService.updateCliente(id, mapper.toEntity(cliente));
+        cliente.setId(id); // Ensure ID is set in DTO
+        Cliente updated = clienteService.updateCliente(cliente);
 
         ClienteResponse response = new ClienteResponse();
         response.setData(mapper.toDto(updated));
@@ -63,7 +64,8 @@ public class ClienteController implements ClienteControllerApi {
 
     @Override
     public ResponseEntity<VoidResponse> clientesIdDelete(Integer id) {
-        clienteService.deleteCliente(id);
+        com.banco.api.dto.DeleteDTO deleteDTO = new com.banco.api.dto.DeleteDTO(id);
+        clienteService.deleteCliente(deleteDTO);
 
         VoidResponse response = new VoidResponse();
 

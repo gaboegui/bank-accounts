@@ -22,18 +22,17 @@ public interface MovimientoService {
      * Actualiza un movimiento.
      * NOTA: Esta operación está restringida por razones de seguridad.
      * 
-     * @param id         - El ID del movimiento.
-     * @param movimiento - Los datos del movimiento.
+     * @param movimientoDTO - Los datos del movimiento.
      * @return El movimiento actualizado.
      */
-    Movimiento updateMovimiento(Integer id, Movimiento movimiento);
+    Movimiento updateMovimiento(com.banco.api.dto.MovimientoDTO movimientoDTO);
 
     /**
      * Elimina un movimiento y revierte su impacto en el saldo de la cuenta.
      * 
-     * @param id - El ID del movimiento a eliminar.
+     * @param deleteDTO - El DTO con el ID del movimiento a eliminar.
      */
-    void deleteMovimiento(Integer id);
+    void deleteMovimiento(com.banco.api.dto.DeleteDTO deleteDTO);
 
     /**
      * Recupera todos los movimientos.

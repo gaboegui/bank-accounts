@@ -62,7 +62,8 @@ public class ClienteServiceImplTest {
         existing.setId(1);
         existing.setNombre("Old Name");
 
-        Cliente updateInfo = new Cliente();
+        com.banco.api.dto.ClienteDTO updateInfo = new com.banco.api.dto.ClienteDTO();
+        updateInfo.setId(1);
         updateInfo.setNombre("New Name");
         updateInfo.setContrasena("newPassword");
 
@@ -70,7 +71,7 @@ public class ClienteServiceImplTest {
         when(passwordEncoder.encode(any(String.class))).thenReturn("encodedNewPassword");
         when(clienteRepository.save(existing)).thenReturn(existing);
 
-        Cliente updated = clienteService.updateCliente(1, updateInfo);
+        Cliente updated = clienteService.updateCliente(updateInfo);
         assertEquals("New Name", updated.getNombre());
     }
 }
