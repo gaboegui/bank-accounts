@@ -1,8 +1,12 @@
 package com.banco.api.controller;
 
 import com.banco.api.dto.CuentaDTO;
+import com.banco.api.dto.CuentaListResponse;
+import com.banco.api.dto.CuentaResponse;
+import com.banco.api.dto.VoidResponse;
 import com.banco.api.mapper.CuentaMapper;
 import com.banco.api.service.CuentaService;
+import com.banco.api.util.ResponseBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,27 +28,44 @@ public class CuentaController implements CuentaControllerApi {
     private final CuentaMapper mapper;
 
     @Override
-    public ResponseEntity<List<CuentaDTO>> cuentasGet() {
-        return ResponseEntity.ok(cuentaService.getAllCuentas().stream()
+    public ResponseEntity<CuentaListResponse> cuentasGet() {
+        List<CuentaDTO> cuentas = cuentaService.getAllCuentas().stream()
                 .map(mapper::toDto)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+
+        CuentaListResponse response = new CuentaListResponse();
+        response.setData(cuentas);
+
+        return ResponseEntity.ok(ResponseBuilder.buildSuccess(response, "Cuentas listadas exitosamente"));
     }
 
     @Override
-    public ResponseEntity<CuentaDTO> cuentasPost(CuentaDTO cuenta) {
+    public ResponseEntity<CuentaResponse> cuentasPost(CuentaDTO cuenta) {
         com.banco.api.entity.Cuenta created = cuentaService.createCuenta(mapper.toEntity(cuenta));
-        return new ResponseEntity<>(mapper.toDto(created), HttpStatus.CREATED);
+
+        CuentaResponse response = new CuentaResponse();
+        response.setData(mapper.toDto(created));
+
+        return new ResponseEntity<>(ResponseBuilder.buildSuccess(response, "Cuenta creada exitosamente"),
+                HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<CuentaDTO> cuentasIdPut(Integer id, CuentaDTO cuenta) {
+    public ResponseEntity<CuentaResponse> cuentasIdPut(Integer id, CuentaDTO cuenta) {
         com.banco.api.entity.Cuenta updated = cuentaService.updateCuenta(id, mapper.toEntity(cuenta));
-        return ResponseEntity.ok(mapper.toDto(updated));
+
+        CuentaResponse response = new CuentaResponse();
+        response.setData(mapper.toDto(updated));
+
+        return ResponseEntity.ok(ResponseBuilder.buildSuccess(response, "Cuenta actualizada exitosamente"));
     }
 
     @Override
-    public ResponseEntity<Void> cuentasIdDelete(Integer id) {
+    public ResponseEntity<VoidResponse> cuentasIdDelete(Integer id) {
         cuentaService.deleteCuenta(id);
-        return ResponseEntity.noContent().build();
+
+        VoidResponse response = new VoidResponse();
+
+        return ResponseEntity.ok(ResponseBuilder.buildSuccess(response, "Cuenta eliminada exitosamente"));
     }
 }

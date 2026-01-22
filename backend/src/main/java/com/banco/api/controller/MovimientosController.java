@@ -1,9 +1,13 @@
 package com.banco.api.controller;
 
 import com.banco.api.dto.MovimientoDTO;
+import com.banco.api.dto.MovimientoListResponse;
+import com.banco.api.dto.MovimientoResponse;
+import com.banco.api.dto.VoidResponse;
 import com.banco.api.entity.Movimiento;
 import com.banco.api.mapper.MovimientoMapper;
 import com.banco.api.service.MovimientoService;
+import com.banco.api.util.ResponseBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,27 +30,44 @@ public class MovimientosController implements MovimientosControllerApi {
     private final MovimientoMapper mapper;
 
     @Override
-    public ResponseEntity<List<MovimientoDTO>> movimientosGet() {
-        return ResponseEntity.ok(movimientoService.getAllMovimientos().stream()
+    public ResponseEntity<MovimientoListResponse> movimientosGet() {
+        List<MovimientoDTO> movimientos = movimientoService.getAllMovimientos().stream()
                 .map(mapper::toDto)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+
+        MovimientoListResponse response = new MovimientoListResponse();
+        response.setData(movimientos);
+
+        return ResponseEntity.ok(ResponseBuilder.buildSuccess(response, "Movimientos listados exitosamente"));
     }
 
     @Override
-    public ResponseEntity<MovimientoDTO> movimientosPost(MovimientoDTO movimiento) {
+    public ResponseEntity<MovimientoResponse> movimientosPost(MovimientoDTO movimiento) {
         Movimiento created = movimientoService.createMovimiento(mapper.toEntity(movimiento));
-        return new ResponseEntity<>(mapper.toDto(created), HttpStatus.CREATED);
+
+        MovimientoResponse response = new MovimientoResponse();
+        response.setData(mapper.toDto(created));
+
+        return new ResponseEntity<>(ResponseBuilder.buildSuccess(response, "Movimiento registrado exitosamente"),
+                HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<MovimientoDTO> movimientosIdPut(Integer id, MovimientoDTO movimiento) {
+    public ResponseEntity<MovimientoResponse> movimientosIdPut(Integer id, MovimientoDTO movimiento) {
         Movimiento updated = movimientoService.updateMovimiento(id, mapper.toEntity(movimiento));
-        return ResponseEntity.ok(mapper.toDto(updated));
+
+        MovimientoResponse response = new MovimientoResponse();
+        response.setData(mapper.toDto(updated));
+
+        return ResponseEntity.ok(ResponseBuilder.buildSuccess(response, "Movimiento actualizado exitosamente"));
     }
 
     @Override
-    public ResponseEntity<Void> movimientosIdDelete(Integer id) {
+    public ResponseEntity<VoidResponse> movimientosIdDelete(Integer id) {
         movimientoService.deleteMovimiento(id);
-        return ResponseEntity.noContent().build();
+
+        VoidResponse response = new VoidResponse();
+
+        return ResponseEntity.ok(ResponseBuilder.buildSuccess(response, "Movimiento eliminado exitosamente"));
     }
 }

@@ -62,5 +62,6 @@ El archivo `BaseDatos.sql` se ejecuta automáticamente al iniciar el contenedor 
 Para ejecutar las pruebas del backend:
 ```bash
 cd backend
+
 ./mvnw test
 ```

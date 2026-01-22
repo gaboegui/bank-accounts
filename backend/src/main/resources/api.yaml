@@ -19,9 +19,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ClienteDTO'
+                $ref: '#/components/schemas/ClienteListResponse'
     post:
       tags:
         - ClienteController
@@ -38,7 +36,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClienteDTO'
+                $ref: '#/components/schemas/ClienteResponse'
 
   /clientes/{id}:
     put:
@@ -62,7 +60,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClienteDTO'
+                $ref: '#/components/schemas/ClienteResponse'
     delete:
       tags:
         - ClienteController
@@ -76,6 +74,10 @@ paths:
       responses:
         '204':
           description: Client deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoidResponse'
 
   /cuentas:
     get:
@@ -88,9 +90,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CuentaDTO'
+                $ref: '#/components/schemas/CuentaListResponse'
     post:
       tags:
         - CuentaController
@@ -106,7 +106,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CuentaDTO'
+                $ref: '#/components/schemas/CuentaResponse'
 
   /cuentas/{id}:
     put:
@@ -130,7 +130,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CuentaDTO'
+                $ref: '#/components/schemas/CuentaResponse'
     delete:
       tags:
         - CuentaController
@@ -144,6 +144,10 @@ paths:
       responses:
         '204':
           description: Account deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoidResponse'
 
   /movimientos:
     get:
@@ -156,9 +160,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/MovimientoDTO'
+                $ref: '#/components/schemas/MovimientoListResponse'
     post:
       tags:
         - MovimientosController
@@ -174,7 +176,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MovimientoDTO'
+                $ref: '#/components/schemas/MovimientoResponse'
   
   /movimientos/{id}:
     put:
@@ -198,7 +200,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MovimientoDTO'
+                $ref: '#/components/schemas/MovimientoResponse'
     delete:
       tags:
         - MovimientosController
@@ -212,6 +214,10 @@ paths:
       responses:
         '204':
           description: Movement deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoidResponse'
 
   /reportes:
     get:
@@ -242,12 +248,97 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ReporteDTO'
+                $ref: '#/components/schemas/ReporteListResponse'
 
 components:
   schemas:
+    BaseResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        codigo-mensaje:
+          type: string
+        mensaje:
+          type: string
+        fecha:
+          type: string
+          format: date-time
+    
+    ClienteListResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/ClienteDTO'
+
+    ClienteResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/ClienteDTO'
+
+    CuentaListResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/CuentaDTO'
+
+    CuentaResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/CuentaDTO'
+
+    MovimientoListResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/MovimientoDTO'
+
+    MovimientoResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/MovimientoDTO'
+
+    ReporteListResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/ReporteDTO'
+    
+    VoidResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              nullable: true
+
     ClienteDTO:
       type: object
       properties:

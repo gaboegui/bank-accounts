@@ -42,7 +42,7 @@ public class ClienteControllerTest {
 
         mockMvc.perform(get("/clientes"))
                 .andExpect(status().isOk())
-                .andExpect(content().json("[]"));
+                .andExpect(jsonPath("$.data").isArray());
     }
 
     @Test
