@@ -20,12 +20,12 @@ export function useClientes(debouncedSearch: string = '') {
     const fetchClientes = async () => {
         setLoading(true);
         try {
-            const response = await getClientes();
-            let data = response.data;
+            const data = await getClientes();
+            let filteredData = data;
             if (debouncedSearch) {
-                data = data.filter(c => c.nombre.toLowerCase().includes(debouncedSearch.toLowerCase()));
+                filteredData = data.filter(c => c.nombre.toLowerCase().includes(debouncedSearch.toLowerCase()));
             }
-            setClientes(data);
+            setClientes(filteredData);
             setError(null);
         } catch (err) {
             console.error(err);
@@ -84,9 +84,10 @@ export function useClientes(debouncedSearch: string = '') {
             await deleteCliente(id);
             await fetchClientes();
             return true;
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
-            setError('Error eliminando cliente');
+            const message = err.response?.data?.message || 'Error eliminando cliente';
+            setError(message);
             return false;
         }
     };

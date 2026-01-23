@@ -19,9 +19,9 @@ export function useMovimientos() {
     const fetchMovimientos = async () => {
         setLoading(true);
         try {
-            const response = await getMovimientos();
+            const data = await getMovimientos();
             // Ordenar por fecha desc
-            const sorted = response.data.sort((a, b) => {
+            const sorted = data.sort((a, b) => {
                 const dateA = a.fecha ? new Date(a.fecha).getTime() : 0;
                 const dateB = b.fecha ? new Date(b.fecha).getTime() : 0;
                 return dateB - dateA;

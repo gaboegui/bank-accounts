@@ -24,8 +24,8 @@ export function Reportes() {
         // Necesario para el nombre en el exporte PDF
         const fetchClientes = async () => {
             try {
-                const response = await getClientes();
-                setClientes(response.data);
+                const data = await getClientes();
+                setClientes(data);
             } catch (error) {
                 console.error(error);
             }

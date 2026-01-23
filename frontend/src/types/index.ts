@@ -39,3 +39,11 @@ export interface Reporte {
     transaccion: number;
     saldoDisponible: number;
 }
+
+export interface BaseResponse<T> {
+    id: string; // UUID
+    'codigo-mensaje': string;
+    mensaje: string;
+    fecha: string;
+    data: T;
+}

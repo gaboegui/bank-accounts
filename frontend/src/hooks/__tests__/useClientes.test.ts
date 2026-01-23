@@ -17,8 +17,8 @@ describe('useClientes', () => {
     });
 
     it('should fetch clients on mount', async () => {
-        const mockData = [{ id: 1, nombre: 'Juan' }];
-        (getClientes as any).mockResolvedValue({ data: mockData });
+        const mockData = [{ id: 1, nombre: 'Juan', clienteId: '123' } as any];
+        (getClientes as any).mockResolvedValue(mockData);
 
         const { result } = renderHook(() => useClientes());
 
@@ -31,7 +31,7 @@ describe('useClientes', () => {
 
     it('should filter clients', async () => {
         const mockData = [{ id: 1, nombre: 'Juan' }, { id: 2, nombre: 'Pedro' }];
-        (getClientes as any).mockResolvedValue({ data: mockData });
+        (getClientes as any).mockResolvedValue(mockData);
 
         const { result } = renderHook(() => useClientes('ua')); // "ua" matches Juan
 
@@ -40,7 +40,7 @@ describe('useClientes', () => {
     });
 
     it('should add a client', async () => {
-        (getClientes as any).mockResolvedValue({ data: [] });
+        (getClientes as any).mockResolvedValue([]);
         (createCliente as any).mockResolvedValue({});
 
         const { result } = renderHook(() => useClientes());

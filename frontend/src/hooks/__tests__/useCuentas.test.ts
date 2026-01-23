@@ -17,7 +17,7 @@ describe('useCuentas', () => {
 
     it('should fetch accounts on mount', async () => {
         const mockData = [{ id: 1, numeroCuenta: '22222', saldoInicial: 100 }];
-        (getCuentas as any).mockResolvedValue({ data: mockData });
+        (getCuentas as any).mockResolvedValue(mockData);
 
         const { result } = renderHook(() => useCuentas());
 
@@ -27,7 +27,7 @@ describe('useCuentas', () => {
     });
 
     it('should add an account', async () => {
-        (getCuentas as any).mockResolvedValue({ data: [] });
+        (getCuentas as any).mockResolvedValue([]);
         (createCuenta as any).mockResolvedValue({});
 
         const { result } = renderHook(() => useCuentas());

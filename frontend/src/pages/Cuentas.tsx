@@ -15,7 +15,7 @@ import styles from './Page.module.css';
  * Permite listar, crear, editar y eliminar cuentas bancarias.
  */
 export function Cuentas() {
-    const { cuentas, addCuenta, editCuenta, removeCuenta } = useCuentas();
+    const { cuentas, error, addCuenta, editCuenta, removeCuenta } = useCuentas();
     const [clientes, setClientes] = useState<Cliente[]>([]);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,8 +25,8 @@ export function Cuentas() {
         // Se necesitan clientes para renderizar los nombres en la tabla
         const fetchClientes = async () => {
             try {
-                const response = await getClientes();
-                setClientes(response.data);
+                const data = await getClientes();
+                setClientes(data);
             } catch (error) {
                 console.error(error);
             }
@@ -90,6 +90,12 @@ export function Cuentas() {
                 </Button>
             </div>
 
+            {error && (
+                <div style={{ padding: '1rem', marginBottom: '1rem', backgroundColor: '#fee2e2', color: '#991b1b', borderRadius: '0.375rem', border: '1px solid #fecaca' }}>
+                    {error}
+                </div>
+            )}
+
             <Table<Cuenta>
                 data={cuentas}
                 columns={columns}
@@ -107,6 +113,6 @@ export function Cuentas() {
                     onCancel={() => setIsModalOpen(false)}
                 />
             </Modal>
-        </div>
+        </div >
     );
 }

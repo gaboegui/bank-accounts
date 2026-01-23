@@ -64,3 +64,8 @@ INSERT INTO movimientos (fecha, tipo_movimiento, valor, saldo, cuenta_id) VALUES
 INSERT INTO movimientos (fecha, tipo_movimiento, valor, saldo, cuenta_id) VALUES ('2022-02-10 12:00:00', 'Deposito', 150, 150, 3);
 -- 496825 | Retiro de 540 (Saldo final: 0)
 INSERT INTO movimientos (fecha, tipo_movimiento, valor, saldo, cuenta_id) VALUES ('2022-02-08 13:00:00', 'Retiro', -540, 0, 4);
+
+-- Reset sequences to match manually inserted IDs
+SELECT setval('persona_id_seq', (SELECT MAX(id) FROM persona));
+SELECT setval('cuenta_id_seq', (SELECT MAX(id) FROM cuenta));
+SELECT setval('movimientos_id_seq', (SELECT MAX(id) FROM movimientos));

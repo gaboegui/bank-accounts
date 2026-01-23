@@ -28,11 +28,11 @@ export function CuentaForm({ initialData, onSubmit, onCancel }: CuentaFormProps)
     useEffect(() => {
         const fetchClientes = async () => {
             try {
-                const response = await getClientes();
-                setClientes(response.data);
+                const data = await getClientes();
+                setClientes(data);
                 // If no clienteId is set, default to first one
-                if (!formData.clienteId && !initialData?.clienteId && response.data.length > 0) {
-                    setFormData(prev => ({ ...prev, clienteId: response.data[0].id }));
+                if (!formData.clienteId && !initialData?.clienteId && data.length > 0) {
+                    setFormData(prev => ({ ...prev, clienteId: data[0].id }));
                 }
             } catch (error) {
                 console.error(error);

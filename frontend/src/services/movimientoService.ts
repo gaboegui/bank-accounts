@@ -1,12 +1,13 @@
 import { api } from './api';
-import type { Movimiento } from '../types';
+import type { Movimiento, BaseResponse } from '../types';
 
 /**
  * Obtiene todos los movimientos de la API.
  * @returns Una promesa que resuelve a un array de objetos Movimiento.
  */
 export const getMovimientos = async () => {
-    return api.get<Movimiento[]>('/movimientos');
+    const response = await api.get<BaseResponse<Movimiento[]>>('/movimientos');
+    return response.data.data;
 };
 
 /**
@@ -15,7 +16,8 @@ export const getMovimientos = async () => {
  * @returns Una promesa que resuelve al objeto Movimiento creado.
  */
 export const createMovimiento = async (movimiento: Movimiento) => {
-    return api.post<Movimiento>('/movimientos', movimiento);
+    const response = await api.post<BaseResponse<Movimiento>>('/movimientos', movimiento);
+    return response.data.data;
 };
 
 /**
@@ -25,7 +27,8 @@ export const createMovimiento = async (movimiento: Movimiento) => {
  * @returns Una promesa que resuelve al objeto Movimiento actualizado.
  */
 export const updateMovimiento = async (id: number, movimiento: Movimiento) => {
-    return api.put<Movimiento>(`/movimientos/${id}`, movimiento);
+    const response = await api.put<BaseResponse<Movimiento>>(`/movimientos/${id}`, movimiento);
+    return response.data.data;
 };
 
 /**

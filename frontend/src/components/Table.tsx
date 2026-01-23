@@ -24,7 +24,7 @@ interface TableProps<T> {
  * @param emptyMessage - Mensaje para mostrar cuando los datos están vacíos.
  */
 export function Table<T>({ data, columns, keyExtractor, emptyMessage = "No se encontraron registros" }: TableProps<T>) {
-    if (data.length === 0) {
+    if (!data || data.length === 0) {
         return <div className={styles.empty}>{emptyMessage}</div>;
     }
 

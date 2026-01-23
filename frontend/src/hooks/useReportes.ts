@@ -23,11 +23,9 @@ export function useReportes() {
         console.log('fetchReporte called with:', { fechaInicio, fechaFin, clienteId });
         setLoading(true);
         try {
-            const response = await getReporte(fechaInicio, fechaFin, parseInt(clienteId));
-            console.log('API Response:', response);
-            console.log('Response data:', response.data);
-            console.log('Response data length:', response.data?.length);
-            setReportes(response.data);
+            const data = await getReporte(fechaInicio, fechaFin, parseInt(clienteId));
+            console.log('API Response data:', data);
+            setReportes(data);
             setError(null);
         } catch (err: any) {
             console.error('Error in fetchReporte:', err);

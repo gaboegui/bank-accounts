@@ -20,7 +20,7 @@ describe('useMovimientos', () => {
             { id: 1, fecha: '2023-01-01', valor: 100 },
             { id: 2, fecha: '2023-01-02', valor: 200 }
         ];
-        (getMovimientos as any).mockResolvedValue({ data: mockData });
+        (getMovimientos as any).mockResolvedValue(mockData);
 
         const { result } = renderHook(() => useMovimientos());
 
@@ -32,7 +32,7 @@ describe('useMovimientos', () => {
     });
 
     it('should add a movement', async () => {
-        (getMovimientos as any).mockResolvedValue({ data: [] });
+        (getMovimientos as any).mockResolvedValue([]);
         (createMovimiento as any).mockResolvedValue({});
 
         const { result } = renderHook(() => useMovimientos());

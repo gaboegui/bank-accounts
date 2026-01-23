@@ -19,8 +19,8 @@ export function useCuentas() {
     const fetchCuentas = async () => {
         setLoading(true);
         try {
-            const response = await getCuentas();
-            setCuentas(response.data);
+            const data = await getCuentas();
+            setCuentas(data);
             setError(null);
         } catch (err) {
             console.error(err);
@@ -79,9 +79,10 @@ export function useCuentas() {
             await deleteCuenta(id);
             await fetchCuentas();
             return true;
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
-            setError('Error eliminando cuenta');
+            const message = err.response?.data?.message || 'Error eliminando cuenta';
+            setError(message);
             return false;
         }
     };

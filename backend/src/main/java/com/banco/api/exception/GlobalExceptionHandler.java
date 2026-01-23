@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
             response.put("message",
                     "El registro ya existe (llave duplicada). Verifique el número de cuenta o identificación.");
         } else if (msg.contains("foreign key")) {
-            response.put("message", "Referencia inválida. El cliente o cuenta asociada no existe.");
+            response.put("message", "No se puede eliminar porque tiene registros asociados (cuentas o movimientos).");
         } else {
             response.put("message", "Error de integridad de datos: " + msg);
         }

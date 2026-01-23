@@ -1,5 +1,5 @@
 import { api } from './api';
-import type { Reporte } from '../types';
+import type { Reporte, BaseResponse } from '../types';
 import { toISODateString } from '../utils/format';
 
 /**
@@ -20,11 +20,12 @@ export const getReporte = async (fechaInicio: string, fechaFin: string, clienteI
         clienteId
     });
 
-    return api.get<Reporte[]>('/reportes', {
+    const response = await api.get<BaseResponse<Reporte[]>>('/reportes', {
         params: {
             fechaInicio: formattedFechaInicio,
             fechaFin: formattedFechaFin,
             clienteId
         }
     });
+    return response.data.data;
 };

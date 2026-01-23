@@ -30,10 +30,10 @@ export function MovimientoForm({ initialData, onSubmit, onCancel, error }: Movim
     useEffect(() => {
         const fetchCuentas = async () => {
             try {
-                const response = await getCuentas();
-                setCuentas(response.data);
-                if (!cuentaId && !initialData?.cuentaId && response.data.length > 0) {
-                    setCuentaId(response.data[0].id || 0);
+                const data = await getCuentas();
+                setCuentas(data);
+                if (!cuentaId && !initialData?.cuentaId && data.length > 0) {
+                    setCuentaId(data[0].id || 0);
                 }
             } catch (error) {
                 console.error(error);

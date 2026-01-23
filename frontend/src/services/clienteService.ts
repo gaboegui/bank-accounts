@@ -1,5 +1,5 @@
 import { api } from './api';
-import type { Cliente } from '../types';
+import type { Cliente, BaseResponse } from '../types';
 
 /**
  * Obtiene todos los clientes de la API.
@@ -11,7 +11,8 @@ export const getClientes = async () => {
 
     // Asumiendo que el backend devuelve todos y filtramos (o actualizamos el backend luego)
     // Por ahora solo obtenemos todos.
-    return api.get<Cliente[]>('/clientes');
+    const response = await api.get<BaseResponse<Cliente[]>>('/clientes');
+    return response.data.data;
 };
 
 /**
@@ -20,7 +21,8 @@ export const getClientes = async () => {
  * @returns Una promesa que resuelve al objeto Cliente creado.
  */
 export const createCliente = async (cliente: Cliente) => {
-    return api.post<Cliente>('/clientes', cliente);
+    const response = await api.post<BaseResponse<Cliente>>('/clientes', cliente);
+    return response.data.data;
 };
 
 /**
@@ -30,7 +32,8 @@ export const createCliente = async (cliente: Cliente) => {
  * @returns Una promesa que resuelve al objeto Cliente actualizado.
  */
 export const updateCliente = async (id: number, cliente: Cliente) => {
-    return api.put<Cliente>(`/clientes/${id}`, cliente);
+    const response = await api.put<BaseResponse<Cliente>>(`/clientes/${id}`, cliente);
+    return response.data.data;
 };
 
 /**

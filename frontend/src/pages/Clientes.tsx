@@ -17,7 +17,7 @@ import styles from './Page.module.css';
 export function Clientes() {
     const [search, setSearch] = useState('');
     const debouncedSearch = useDebounce(search, 300);
-    const { clientes, addCliente, editCliente, removeCliente } = useClientes(debouncedSearch);
+    const { clientes, error, addCliente, editCliente, removeCliente } = useClientes(debouncedSearch);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingCliente, setEditingCliente] = useState<Cliente | undefined>(undefined);
@@ -80,6 +80,12 @@ export function Clientes() {
                     </Button>
                 </div>
             </div>
+
+            {error && (
+                <div style={{ padding: '1rem', marginBottom: '1rem', backgroundColor: '#fee2e2', color: '#991b1b', borderRadius: '0.375rem', border: '1px solid #fecaca' }}>
+                    {error}
+                </div>
+            )}
 
             <Table<Cliente>
                 data={clientes}

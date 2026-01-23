@@ -22,13 +22,17 @@ export function ClienteForm({ initialData, onSubmit, onCancel }: ClienteFormProp
     const estadoId = useId();
 
     const [formData, setFormData] = useState<Partial<Cliente>>({
-        nombre: '', genero: 'Masculino', edad: 0, identificacion: '', direccion: '', telefono: '', clienteId: '', contrasena: '', estado: true,
+        nombre: '', genero: 'Masculino', edad: 0, identificacion: '', direccion: '', telefono: '', contrasena: '', estado: true,
         ...initialData
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        await onSubmit(formData as Cliente);
+        const dataToSubmit = {
+            ...formData,
+            clienteId: formData.identificacion // User specified that identificacion is the clienteId
+        };
+        await onSubmit(dataToSubmit as Cliente);
     };
 
     return (

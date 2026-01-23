@@ -22,8 +22,8 @@ export function Movimientos() {
     useEffect(() => {
         const fetchCuentas = async () => {
             try {
-                const response = await getCuentas();
-                setCuentas(response.data);
+                const data = await getCuentas();
+                setCuentas(data);
             } catch (error) {
                 console.error(error);
             }

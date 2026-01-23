@@ -64,4 +64,15 @@ Para ejecutar las pruebas del backend:
 cd backend
 
 ./mvnw test
+
+o 
+# (si se encuentra en la carpeta backend y se tiene instalado maven)
+mvn test  
+```
+
+Para ejecutar las pruebas del frontend:
+```bash
+cd frontend
+
+npm test
 ```
